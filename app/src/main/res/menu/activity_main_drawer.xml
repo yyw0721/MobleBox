@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_myDetail"
+            android:title="내 정보" />
+        <item
+            android:id="@+id/nav_bookMovie"
+            android:title="영화 예매하기" />
+
+        <item
+            android:id="@+id/nav_snackBar"
+            android:title="먹거리 구매"/>
+
+
+    </group>
+
+    <item android:title="">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_projectPR"
+                    android:title="회사 소개"/>
+
+                <item
+                    android:id="@+id/nav_map"
+                    android:title="오시는 길"/>
+
+                <item
+                    android:id="@+id/nav_ask"
+                    android:title="고객 센터"/>
+
+            </group>
+
+        </menu>
+    </item>
+
+
+
+</menu>

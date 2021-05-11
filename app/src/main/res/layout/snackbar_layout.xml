@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/cb"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        />
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_toRightOf="@id/cb"
+        android:src="@drawable/popcorn_mgv_combo"
+        />
+    <TextView
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/iv"
+        android:layout_toLeftOf="@id/delete"
+        android:textSize="20dp"
+        android:layout_margin="3dp"
+        />
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/iv"
+        android:layout_toLeftOf="@id/delete"
+        android:layout_below="@id/menu"
+        android:textSize="20dp"
+        android:layout_margin="3dp"
+        />
+    <EditText
+        android:id="@+id/num_edit"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/iv"
+        android:layout_below="@id/price"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_margin="3dp"
+        android:inputType="number"
+        android:visibility="invisible"
+        />
+    <Button
+        android:id="@+id/num_btn"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/price"
+        android:layout_toRightOf="@id/num_edit"
+        android:text="수량 변경"
+        android:visibility="invisible"
+        />
+    <Spinner
+        android:id="@+id/num_spinner"
+        android:entries="@array/개수"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/iv"
+        android:layout_below="@id/price"
+        android:spinnerMode="dialog"
+        android:textSize="20dp"
+        android:layout_margin="3dp"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:text="X"
+        android:textSize="25dp"
+        android:layout_margin="10dp"
+        />
+
+
+</RelativeLayout>

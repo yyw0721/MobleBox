@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/childfragment_container"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/drawer_layout_home">
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- 뷰페이저 사용 xml -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btn_layoutevent"
+                        android:orientation="vertical">
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/pager_event"
+                            android:layout_width="match_parent"
+                            android:layout_height="100sp"/>
+
+                        <me.relex.circleindicator.CircleIndicator
+                            android:id="@+id/indicator"
+                            app:ci_drawable="@drawable/black_radius"
+                            app:ci_height="7dp"
+                            app:ci_width="7dp"
+                            app:ci_margin="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"/>
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#000000"
+                        android:layout_alignTop="@id/tv_textMovie"/>
+
+                    <TextView
+                        android:id="@+id/tv_textMovie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btn_layoutevent"
+                        android:layout_marginTop="60sp"
+                        android:gravity="center"
+                        android:text="추천영화 BEST3"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_textMovie"
+                        android:orientation="vertical">
+
+                        <!--      뷰페이저2...              -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/btn_layoutmovie"
+                            android:clickable="true"
+                            android:orientation="vertical">
+
+                            <androidx.viewpager.widget.ViewPager
+                                android:id="@+id/pager_movie"
+                                android:layout_width="match_parent"
+                                android:layout_height="300sp" />
+
+                            <me.relex.circleindicator.CircleIndicator
+                                android:id="@+id/indicator_movie"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                app:ci_drawable="@drawable/black_radius"
+                                android:layout_below="@id/pager_movie"
+                                app:ci_height="7dp"
+                                app:ci_margin="4dp"
+                                app:ci_width="7dp" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="900dp"
+                            android:text="스크롤 뷰 테스트" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_baseline_arrow_upward_24" />
+
+
+
+</FrameLayout>

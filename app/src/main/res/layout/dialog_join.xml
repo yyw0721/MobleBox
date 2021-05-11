@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin"
+    android:paddingBottom="@dimen/fragment_vertical_margin">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layoutJoin">
+
+            <TextView
+                android:id="@+id/tv_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:maxLength="6"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/userID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_id"
+                android:layout_alignBaseline="@id/tv_id"
+                android:layout_alignLeft="@id/birth"
+                android:hint="@string/user_Id"
+                android:selectAllOnFocus="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_idCheck"
+                android:textColor="#ff1111"
+                android:layout_toLeftOf="@id/btn_idCheck"
+                android:layout_alignBaseline="@id/btn_idCheck"
+                android:layout_alignLeft="@id/userID"/>
+
+            <Button
+                android:id="@+id/btn_idCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userID"
+                android:layout_alignRight="@id/userID"
+                android:text="중복체크" />
+
+            <TextView
+                android:id="@+id/tv_pw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PW "
+                android:layout_marginTop="24dp"
+                android:layout_alignBaseline="@id/password"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/tv_id"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_pw"
+                android:layout_below="@id/btn_idCheck"
+                android:layout_alignLeft="@id/birth"
+                android:hint="@string/prompt_password"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:selectAllOnFocus="true" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/name"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/tv_pw"/>
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_name"
+                android:layout_alignLeft="@id/birth"
+                android:hint="최현학"
+                android:layout_toRightOf="@id/tv_name"/>
+
+
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/gender"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/tv_name"/>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_toRightOf="@id/tv_gender"
+                android:layout_alignBaseline="@id/tv_gender"
+                android:layout_alignLeft="@id/birth"
+                android:layout_below="@id/username"
+                android:entries="@array/gender"/>
+
+            <TextView
+                android:id="@+id/tv_phoneNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phoneNum"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/tv_gender"
+                android:layout_marginTop="24dp"/>
+
+            <EditText
+                android:id="@+id/phoneNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_phoneNum"
+                android:layout_toRightOf="@id/tv_phoneNum"
+                android:layout_alignLeft="@id/birth"
+                android:maxLength="11"
+                android:inputType="phone"
+                android:hint="- 없이 입력해 주세요"/>
+
+            <TextView
+                android:id="@+id/tv_birth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birth"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/tv_phoneNum"
+                android:layout_marginTop="24dp"/>
+
+            <EditText
+                android:id="@+id/birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_birth"
+                android:layout_toRightOf="@id/tv_birth"
+                android:maxLength="6"
+                android:inputType="number"
+                android:hint="YYMMDD"/>
+
+
+
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_birth"
+                android:layout_marginTop="24dp"
+                android:text="주소"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_address"
+                android:layout_alignBaseline="@id/tv_address"
+                android:layout_alignLeft="@id/birth"/>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

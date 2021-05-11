@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="15dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="영화명"
+            android:textSize="20dp"
+
+            />
+        <TextView
+            android:id="@+id/tv_movie_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_movie_name"
+            android:text="일자, 시간, \n지점, 인원"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/tv_movie_info_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_movie_name"
+            android:layout_alignParentRight="true"
+            android:text="가격"
+            android:textSize="20dp"
+            />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:columnCount="3"
+            >
+            <ImageView
+                android:id="@+id/iv_pay1"
+                style="@style/pay_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay1"
+                />
+            <ImageView
+                android:id="@+id/iv_pay2"
+                style="@style/pay_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay2"
+
+                />
+            <ImageView
+                android:id="@+id/iv_pay3"
+                style="@style/pay_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pay3"
+                />
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/btn_pay"
+            android:layout_alignParentBottom="true"
+            android:layout_alignBaseline="@id/btn_pay"
+            android:gravity="center"
+            android:text="최종 결제 금액 : 0원"
+            android:textSize="20dp"
+            />
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text ="결제하기"
+            android:textSize="20dp" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>

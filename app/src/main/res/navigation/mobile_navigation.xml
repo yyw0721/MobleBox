@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_home">
+
+
+    <!-- 메인화면 -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.moblebox.ui.mainHome.HomeFragment"
+        android:label="Moble Box"
+        tools:layout="layout/fragment_home">
+        <action
+            android:id="@+id/action_nav_home_to_nav_myDetail"
+            app:destination="@id/nav_myDetail" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_bookMovie"
+            app:destination="@id/nav_bookMovie" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_ask"
+            app:destination="@id/nav_ask" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_projectPR"
+            app:destination="@id/nav_projectPR" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_kong"
+            app:destination="@id/nav_kong" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_thefather"
+            app:destination="@id/nav_thefather" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_nobody"
+            app:destination="@id/nav_nobody" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_abo"
+            app:destination="@id/nav_abo" />
+    </fragment>
+
+    <!-- 내정보 -->
+    <fragment
+        android:id="@+id/nav_myDetail"
+        android:name="com.example.moblebox.ui.myDetail.MyDetailFragment"
+        android:label="Moble Box 내정보"
+        tools:layout="@layout/fragment_mydetail" />
+
+    <!-- 영화 예매하기 -->
+    <fragment
+        android:id="@+id/nav_bookMovie"
+        android:name="com.example.moblebox.ui.bookMovie.BookMovieFragment"
+        android:label="Moble Box 영화 예매하기"
+        tools:layout="@layout/fragment_bookmovie" >
+        <action
+            android:id="@+id/action_nav_bookMovie_to_nav_reservationMovie"
+            app:destination="@id/nav_reservationMovie" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_reservationMovie"
+        android:name="com.example.moblebox.ui.bookMovie.MovieReservationSeatFragment"
+        android:label="Moble Box 영화 예매하기"
+        tools:layout="@layout/fragment_moviereservationseat">
+        <action
+            android:id="@+id/action_nav_reservationMovie_to_nav_payMovie"
+            app:destination="@id/nav_payMovie" />
+        <argument
+            android:name="place"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movie"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="day"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="time"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_payMovie"
+        android:name="com.example.moblebox.ui.bookMovie.MoviePayFragment"
+        android:label="Moble Box 영화 예매하기"
+        tools:layout="@layout/fragment_moviepay">
+        <action
+            android:id="@+id/action_nav_payMovie_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+
+    <!-- 문의하기 -->
+    <fragment
+        android:id="@+id/nav_ask"
+        android:name="com.example.moblebox.ui.ask.AskFragment"
+        android:label="Moble Box 고객센터"
+        tools:layout="@layout/fragment_ask" >
+        <action
+            android:id="@+id/action_nav_ask_to_nav_QA"
+            app:destination="@id/nav_QA" />
+        <action
+            android:id="@+id/action_nav_ask_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_QA"
+        android:name="com.example.moblebox.ui.ask.WriteQuestionFragment"
+        android:label="Q&amp;A"
+        tools:layout="@layout/fragment_writequestion">
+        <action
+            android:id="@+id/action_nav_QA_to_nav_ask"
+            app:destination="@id/nav_ask"
+            app:popUpTo="@id/nav_ask"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_projectPR"
+        android:name="com.example.moblebox.ui.projectPR.PRFragment"
+        android:label="Moble Box 소개"
+        tools:layout="@layout/fragment_pr" />
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.example.moblebox.ui.map.MapFragment"
+        android:label="오시는 길"
+        tools:layout="@layout/fragment_map"/>
+
+    <fragment
+        android:id="@+id/nav_snackBar"
+        android:name="com.example.moblebox.ui.snackBar.PopcornFragment"
+        android:label="Snack Bar"
+        tools:layout="@layout/fragment_popcorn">
+        <action
+            android:id="@+id/action_nav_snackBar_to_nav_basket"
+            app:destination="@id/nav_basket" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_basket"
+        android:name="com.example.moblebox.ui.snackBar.BasketFragment"
+        android:label="장바구니"
+        tools:layout="@layout/fragment_basket">
+        <action
+            android:id="@+id/action_nav_basket_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <!-- 영화 포스터 클릭   -->
+
+    <fragment
+        android:id="@+id/nav_abo"
+        android:name="com.example.moblebox.ui.movie.Movie1Fragment"
+        tools:layout="@layout/fragment_movie1">
+
+        <action
+            android:id="@+id/action_nav_abo_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_kong"
+        android:name="com.example.moblebox.ui.movie.Movie2Fragment"
+        tools:layout="@layout/fragment_movie2">
+
+
+        <action
+            android:id="@+id/action_nav_kong_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_nobody"
+        android:name="com.example.moblebox.ui.movie.Movie3Fragment"
+        tools:layout="@layout/fragment_movie3">
+
+
+        <action
+            android:id="@+id/action_nav_nobody_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_thefather"
+        android:name="com.example.moblebox.ui.movie.Movie1Fragment"
+        tools:layout="@layout/fragment_movie1">
+
+        <action
+            android:id="@+id/action_nav_thefather_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <!-- homeFragment 하위 Fragment   -->
+
+</navigation>

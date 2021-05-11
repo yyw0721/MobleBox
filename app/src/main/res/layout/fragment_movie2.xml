@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.movie.Movie2Fragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_thefather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <ImageView
+                android:id="@+id/movie2_iv_movie2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                />
+
+            <TextView
+                android:id="@+id/movie2_tv_0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="영화이름"
+                android:layout_below="@id/movie2_iv_movie2"
+                android:textColor="#fff"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="15dp"
+                android:textColor="#B8B8B8"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/movie2_tv_1"
+                android:layout_below="@id/movie2_tv_0" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="15dp"
+                android:textColor="#B8B8B8"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/movie2_tv_1_sub"
+                android:layout_below="@id/movie2_tv_1" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="\n12세이상관람가\n\n"
+                android:textSize="15dp"
+                android:textColor="#9489FF00"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_below="@id/movie2_tv_1_sub"
+                android:id="@+id/movie2_tv_2" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/movie2_tv_2"
+                android:textSize="14dp"
+                android:textColor="#fff"
+                android:text="\n"
+                android:id="@+id/movie2_tv_3" />
+
+            <Button
+                android:id="@+id/movie2_btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie2_tv_3"
+                android:background="#00ff0000"
+                android:text="더보기 ▼"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/movie2_tv_view1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/movie2_btn_add"
+                android:textColor="#B8B8B8"
+                android:textSize="14dp" />
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/movie2_tv_view1"
+                android:background="#00ff0000"
+                android:textColor="#ffffff"
+                android:text="닫기 ▲" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_thefather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_baseline_arrow_upward_24" />
+
+
+
+</FrameLayout>

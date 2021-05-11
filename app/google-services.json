@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "192195226310",
+    "firebase_url": "https://mgvtestprj-default-rtdb.firebaseio.com",
+    "project_id": "mgvtestprj",
+    "storage_bucket": "mgvtestprj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192195226310:android:acbcf9cccdbbfb749bc5c7",
+        "android_client_info": {
+          "package_name": "com.example.mgvtestprj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192195226310-en29qkr529mo4genk23i5dmqsj5aan6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPsf-pO-OqT9-GPAmICa43IfkutuEawpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192195226310-en29qkr529mo4genk23i5dmqsj5aan6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192195226310:android:b0b3b877e7322e799bc5c7",
+        "android_client_info": {
+          "package_name": "com.example.moblebox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192195226310-en29qkr529mo4genk23i5dmqsj5aan6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPsf-pO-OqT9-GPAmICa43IfkutuEawpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192195226310-en29qkr529mo4genk23i5dmqsj5aan6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

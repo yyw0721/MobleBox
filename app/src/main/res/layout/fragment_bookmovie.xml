@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bookMovie.BookMovieFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_movie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="극장을 선택 하세요"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_place"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:layout_toLeftOf="@id/tv_time2"
+                android:background="@drawable/edge"
+                android:text="천안"
+                android:textSize="20dp"
+                android:id="@+id/tv_place1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_place"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@drawable/edge"
+                android:text="서울"
+                android:textSize="20dp"
+                android:id="@+id/tv_place2"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_place"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/tv_time2"
+                android:background="@drawable/edge"
+                android:text="부산"
+                android:textSize="20dp"
+                android:id="@+id/tv_place3"
+                />
+            <TextView
+                android:id="@+id/tv_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_place1"
+                android:gravity="center"
+                android:text="영화를 선택 하세요"
+                android:textSize="20dp" />
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_movie"
+                android:scrollbars="none"
+                >
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_movieImage1"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage2"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage3"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage4"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage5"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage6"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage7"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage8"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage9"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                    <TextView
+                        android:id="@+id/tv_movieImage10"
+                        android:layout_width="180dp"
+                        android:layout_height="255dp"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hsv"
+                android:gravity="center"
+                android:text="날짜를 선택 하세요"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/btn_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_day"
+                android:text="선택" />
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_day"
+                android:gravity="center"
+                android:text="시간을 선택 하세요"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_time"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:layout_toLeftOf="@id/tv_time2"
+                android:background="@drawable/edge"
+                android:text="09:00"
+                android:textSize="20dp"
+                android:id="@+id/tv_time1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_time"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@drawable/edge"
+                android:text="12:00"
+                android:textSize="20dp"
+                android:id="@+id/tv_time2"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_time"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:layout_toRightOf="@id/tv_time2"
+                android:background="@drawable/edge"
+                android:text="19:00"
+                android:textSize="20dp"
+                android:id="@+id/tv_time3"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="15dp"
+                android:text="다음"
+                android:id="@+id/btn_reservation" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_baseline_arrow_upward_24" />
+
+
+</FrameLayout>

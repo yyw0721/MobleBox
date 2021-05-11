@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.ask.AskFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView_ask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20sp">
+
+            <TextView
+                android:id="@+id/text_ask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="목록"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2sp"
+                android:background="@color/black"
+                android:layout_alignTop="@id/listView"/>
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:layout_below="@id/text_ask"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2sp"
+                android:background="@color/black"
+                android:layout_alignTop="@id/btn_write"/>
+
+            <Button
+                android:id="@+id/btn_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="작성하기"
+                android:layout_below="@id/listView"
+                android:layout_alignRight="@id/listView"/>
+
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_ask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_baseline_arrow_upward_24" />
+
+
+
+</FrameLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="지점">
+        <item>천안점</item>
+        <item>서울점</item>
+        <item>부산점</item>
+    </string-array>
+</resources>

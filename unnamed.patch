@@ -1,0 +1,1191 @@
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ .idea/vcs.xml	(date 1620294042000)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++    <mapping directory="" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/res/navigation/mobile_navigation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/navigation/mobile_navigation.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/navigation/mobile_navigation.xml	(date 1620295328000)
+@@ -101,13 +101,22 @@
+         <action
+             android:id="@+id/action_nav_ask_to_nav_QA"
+             app:destination="@id/nav_QA" />
++        <action
++            android:id="@+id/action_nav_ask_to_nav_home"
++            app:destination="@id/nav_home" />
+     </fragment>
+ 
+     <fragment
+         android:id="@+id/nav_QA"
+         android:name="com.example.moblebox.ui.ask.WriteQuestionFragment"
+         android:label="Q&amp;A"
+-        tools:layout="@layout/fragment_writequestion"/>
++        tools:layout="@layout/fragment_writequestion">
++        <action
++            android:id="@+id/action_nav_QA_to_nav_ask"
++            app:destination="@id/nav_ask"
++            app:popUpTo="@id/nav_ask"
++            app:popUpToInclusive="true" />
++    </fragment>
+ 
+     <fragment
+         android:id="@+id/nav_projectPR"
+@@ -115,12 +124,37 @@
+         android:label="Moble Box 소개"
+         tools:layout="@layout/fragment_pr" />
+ 
++    <fragment
++        android:id="@+id/nav_map"
++        android:name="com.example.moblebox.ui.map.MapFragment"
++        android:label="오시는 길"
++        tools:layout="@layout/fragment_map"/>
++
++    <fragment
++        android:id="@+id/nav_snackBar"
++        android:name="com.example.moblebox.ui.snackBar.PopcornFragment"
++        android:label="Snack Bar"
++        tools:layout="@layout/fragment_popcorn">
++        <action
++            android:id="@+id/action_nav_snackBar_to_nav_basket"
++            app:destination="@id/nav_basket" />
++    </fragment>
++
++    <fragment
++        android:id="@+id/nav_basket"
++        android:name="com.example.moblebox.ui.snackBar.BasketFragment"
++        android:label="장바구니"
++        tools:layout="@layout/fragment_basket">
++        <action
++            android:id="@+id/action_nav_basket_to_nav_home"
++            app:destination="@id/nav_home" />
++    </fragment>
++
+     <!-- 영화 포스터 클릭   -->
+ 
+     <fragment
+         android:id="@+id/nav_abo"
+         android:name="com.example.moblebox.ui.movie.Movie1Fragment"
+-        android:label="자산어보"
+         tools:layout="@layout/fragment_movie1">
+ 
+         <action
+@@ -131,8 +165,7 @@
+     <fragment
+         android:id="@+id/nav_kong"
+         android:name="com.example.moblebox.ui.movie.Movie2Fragment"
+-        android:label="고질라 VS 콩"
+-        tools:layout="@layout/fragment_kong">
++        tools:layout="@layout/fragment_movie2">
+ 
+ 
+         <action
+@@ -143,7 +176,6 @@
+     <fragment
+         android:id="@+id/nav_nobody"
+         android:name="com.example.moblebox.ui.movie.Movie3Fragment"
+-        android:label="NoBody"
+         tools:layout="@layout/fragment_movie3">
+ 
+ 
+@@ -154,10 +186,8 @@
+ 
+     <fragment
+         android:id="@+id/nav_thefather"
+-        android:name="com.example.moblebox.ui.movie.TheFatherFragment"
+-        android:label="The Father"
+-        tools:layout="@layout/fragment_movie2">
+-
++        android:name="com.example.moblebox.ui.movie.Movie1Fragment"
++        tools:layout="@layout/fragment_movie1">
+ 
+         <action
+             android:id="@+id/action_nav_thefather_to_nav_home"
+Index: app/src/main/java/com/example/moblebox/ui/myDetail/MyDetailFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/myDetail/MyDetailFragment.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/myDetail/MyDetailFragment.java	(date 1620194792000)
+@@ -1,6 +1,7 @@
+ package com.example.moblebox.ui.myDetail;
+ 
+ import android.os.Bundle;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -8,20 +9,29 @@
+ import android.widget.EditText;
+ import android.widget.ScrollView;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
+ 
+ import com.example.moblebox.MainActivity;
+ import com.example.moblebox.R;
++import com.example.moblebox.UserInfoTags;
++import com.example.moblebox.tag.DBPathTag;
++import com.google.firebase.firestore.FirebaseFirestore;
+ 
+-public class MyDetailFragment extends Fragment {
++public class MyDetailFragment extends Fragment implements UserInfoTags, DBPathTag {
+ 
+     private View view;
+ 
+-    private TextView tv_gender;
++    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
++
++
++    private TextView gender, tv_pwCheck;
+     private Button btn_changePW, btn_ok, btn_change;
+-    private EditText et_name, et_phoneNum, et_birth, et_address, et_newPw, et_newPwCheck;
++    private EditText name, phoneNum, birth, address, newPw, newPwCheck;
++
++    private String loginID, userName, userGender, userPhoneNum, userBirth, userAddress, userNewPw, userNewPwCheck;
+ 
+     MainActivity activity;
+ 
+@@ -39,28 +49,88 @@
+ 
+         activity = (MainActivity) getActivity();
+ 
+-        tv_gender = (TextView)view.findViewById(R.id.tv_gender);
++        loginID = activity.getPreference();
++        
++        if(loginID.length() == 0){
++            Toast.makeText(getContext(), "로그인 후 이용하실수 있는 메뉴입니다.", Toast.LENGTH_LONG).show();
++            activity.onBackPressed();
++        }
++
++
++        btn_change = view.findViewById(R.id.btn_change);
++        btn_changePW = (Button)view.findViewById(R.id.btn_changePw);
++        btn_ok = view.findViewById(R.id.btn_ok);
++
++        name = view.findViewById(R.id.et_name);
++        phoneNum = view.findViewById(R.id.et_phoneNum);
++        birth = view.findViewById(R.id.et_birth);
++        address = view.findViewById(R.id.et_address);
++        newPw = view.findViewById(R.id.et_newPw);
++        newPwCheck = view.findViewById(R.id.et_newPwCheck);
++        gender = view.findViewById(R.id.gender);
+ 
++        tv_pwCheck = view.findViewById(R.id.tv_PWcheck);
+ 
++        if(loginID.length() == 0){                      // 로그인 x
++            Log.i("yongu", "null");
++            btn_changePW.setClickable(false);
++            btn_change.setClickable(false);
+ 
+-        btn_change = (Button)view.findViewById(R.id.btn_change);
+-        btn_change.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
++        } else {                                        // 로그인 o
++            Log.i("yongu", loginID);
++            firestore.collection(PATH_USERINFO).document(loginID).get().addOnCompleteListener(
++                    task -> {
++                        userName = task.getResult().getData().get(USER_NAME).toString().trim();
++                        userGender = task.getResult().getData().get(GENDER).toString().trim();
++                        userPhoneNum = task.getResult().getData().get(USER_PHONE).toString().trim();
++                        userBirth = task.getResult().getData().get(USER_DAY).toString().trim();
++                        userAddress = task.getResult().getData().get(USER_ADDRESS).toString().trim();
++
++                        name.setText(userName);
++                        gender.setText(userGender);
++                        phoneNum.setText(userPhoneNum);
++                        birth.setText(userBirth);
++                        address.setText(userAddress);
++                    }
++            );
++
++            btn_change.setOnClickListener(new View.OnClickListener() {          // 내정보 변경
++                @Override
++                public void onClick(View v) {
+ 
+-            }
+-        });
++                }
++            });
+ 
+-        btn_changePW = (Button)view.findViewById(R.id.btn_changePw);
+-        btn_changePW.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
++            btn_changePW.setOnClickListener(new View.OnClickListener() {        // 비밀번호 변경
++                @Override
++                public void onClick(View v) {
+ 
+-            }
+-        });
++                    userNewPw = newPw.getText().toString().trim();
++                    userNewPwCheck = newPwCheck.getText().toString().trim();
++
++                    Log.i("yongu", "" + userNewPw + ", " + userNewPwCheck);
++
++                    if(userNewPw.length() != 0 && userNewPwCheck.length() != 0){
++                        if(!userNewPw.equals(userNewPwCheck)){
++                            tv_pwCheck.setText("비밀번호가 일치하지 않습니다.");
++                            newPwCheck.setText("");
++                        } else {
++                            firestore.collection(PATH_USERINFO).document(loginID).get().addOnCompleteListener(
++                                    task -> {
++
++                                    }
++                            );
++                        }
++
++                    } else {
++                        Toast.makeText(getContext(), "변경할 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
++                        /* firebase의 비밀번호 수정*/
++                    }
++                }
++            });
++        }
+ 
+-        btn_ok = (Button)view.findViewById(R.id.btn_ok);
+-        btn_ok.setOnClickListener(new View.OnClickListener() {
++        btn_ok.setOnClickListener(new View.OnClickListener() {                  // 확인버튼
+             @Override
+             public void onClick(View v) {
+                 activity.onBackPressed();
+@@ -69,6 +139,8 @@
+ 
+         myScrollView = view.findViewById(R.id.scrollView_my);
+ 
++
++
+         return view;
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/listview_layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/listview_layout.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/layout/listview_layout.xml	(date 1620280035000)
+@@ -2,25 +2,30 @@
+ <LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent">
++    android:layout_height="match_parent"
++    android:layout_marginBottom="10sp">
+ 
+     <TextView
++        android:id="@+id/tv_askNum"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:textSize="20sp"
+         android:gravity="center"
+         android:layout_weight="1"/>
+ 
+     <TextView
++        android:id="@+id/tv_askID"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:textSize="20sp"
+         android:gravity="center"
+         android:layout_weight="1"/>
+ 
+     <TextView
+-        android:id="@+id/tv_title"
++        android:id="@+id/tv_askTitle"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:textSize="20sp"
++        android:gravity="center"
+         android:layout_weight="3"/>
+-
+-
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/menu/activity_main_drawer.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/activity_main_drawer.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/menu/activity_main_drawer.xml	(date 1620098498000)
+@@ -3,12 +3,6 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     tools:showIn="navigation_view">
+ 
+-
+-    <item android:title="">
+-        <menu>
+-        </menu>
+-    </item>
+-
+     <group android:checkableBehavior="single">
+ 
+         <item
+@@ -19,11 +13,32 @@
+             android:title="영화 예매하기" />
+ 
+         <item
+-            android:id="@+id/nav_projectPR"
+-            android:title="회사 소개"/>
+-        <item
+-            android:id="@+id/nav_ask"
+-            android:title="고객 센터"/>
++            android:id="@+id/nav_snackBar"
++            android:title="먹거리 구매"/>
++
++
++    </group>
++
++    <item android:title="">
++        <menu>
++            <group android:checkableBehavior="single">
++                <item
++                    android:id="@+id/nav_projectPR"
++                    android:title="회사 소개"/>
++
++                <item
++                    android:id="@+id/nav_map"
++                    android:title="오시는 길"/>
++
++                <item
++                    android:id="@+id/nav_ask"
++                    android:title="고객 센터"/>
+ 
+-    </group>
++            </group>
++
++        </menu>
++    </item>
++
++
++
+ </menu>
+\ No newline at end of file
+Index: app/src/main/java/com/example/moblebox/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/MainActivity.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/MainActivity.java	(date 1620378079359)
+@@ -48,6 +48,8 @@
+ 
+     SharedPreferences pref;
+     SharedPreferences.Editor editor;
++    public final String PREFERENCE = "Login_User_data";
++
+ 
+     String gender;
+ 
+@@ -55,10 +57,7 @@
+     private String login;
+ 
+     private DrawerLayout drawer;
+-    private NavigationView navigationView;
+     static private AppBarConfiguration mAppBarConfiguration;
+-    private ActionBarDrawerToggle actionBarDrawerToggle;
+-    private NavController navController;
+ 
+     Map<String, Map> userID= new HashMap<>();
+     Map<String, String> userData = new HashMap<>();
+@@ -77,17 +76,19 @@
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
+ 
++        deletePreference();
++
+         Toolbar toolbar = findViewById(R.id.toolbar);
+         setSupportActionBar(toolbar);
+ 
+         drawer = findViewById(R.id.drawer_layout);
+-        navigationView = findViewById(R.id.nav_view);
++        NavigationView navigationView = findViewById(R.id.nav_view);
+ 
+-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
++        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
+         drawer.addDrawerListener(actionBarDrawerToggle);
+         actionBarDrawerToggle.syncState();
+ 
+-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
++        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+         mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawer).build();
+         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+         NavigationUI.setupWithNavController(navigationView, navController);
+@@ -132,10 +133,7 @@
+                 tv_myID.setText("로그인 하세요.");
+ 
+                 /* 로그아웃 시 pref에 저장되어있는 ID값 삭제 */
+-                pref = getSharedPreferences("SAVE", MODE_PRIVATE);
+-                editor = pref.edit();
+-                editor.remove("ID");
+-                editor.commit();
++                deletePreference();
+ 
+                 Toast.makeText(MainActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                 drawer.closeDrawers();
+@@ -342,10 +340,7 @@
+                                     btn_logout.setClickable(true);
+ 
+                                     /* 공유 프레프런스에 'ID' key값에 value editText 'id'값 저장 */
+-                                    pref = getSharedPreferences("SAVE", MODE_PRIVATE);
+-                                    editor = pref.edit();
+-                                    editor.putString("ID", userId);
+-                                    editor.apply();
++                                    setPreference(userId);
+ 
+                                     tv_myID.setText(userId + "님 안녕하세요");
+ 
+@@ -358,4 +353,23 @@
+             );
+         }
+     }
++    public void setPreference(String value){
++        pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
++        editor = pref.edit();
++        editor.putString("ID", value);
++        editor.commit();
++    }
++
++    public String getPreference(){
++        pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
++        String userID = pref.getString("ID", "");
++        return userID;
++    }
++
++    public void deletePreference(){
++        pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
++        editor = pref.edit();
++        editor.remove("ID");
++        editor.commit();
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/moblebox/ui/bookMovie/BookMovieFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/bookMovie/BookMovieFragment.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/bookMovie/BookMovieFragment.java	(date 1620363198860)
+@@ -27,6 +27,7 @@
+ 
+ import com.bumptech.glide.Glide;
+ import com.bumptech.glide.request.target.SimpleTarget;
++import com.example.moblebox.MainActivity;
+ import com.example.moblebox.R;
+ import com.example.moblebox.api.ApiDailyMovie;
+ import com.example.moblebox.mobleboxdb.MobleBoxDB;
+@@ -104,14 +105,20 @@
+     FloatingActionButton fab;
+     ScrollView myScrollView;
+ 
+-    public static BookMovieFragment newInstance(){
+-        return new BookMovieFragment();
+-    }
++    private String loginID;
++
++    MainActivity activity;
++
++
+ 
+     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+ 
+         view = inflater.inflate(R.layout.fragment_bookmovie, container, false);
+ 
++
++        activity = (MainActivity) getActivity();
++        loginID = activity.getPreference();
++
+         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd", Locale.KOREA);
+         SharedPreferences pref = this.getActivity().getSharedPreferences(PREFNAME, MODE_PRIVATE);
+         Calendar calendar = Calendar.getInstance();
+@@ -337,6 +344,7 @@
+             String day = tv_day.getText().toString();
+             String time = tv_time.getText().toString();
+ 
++
+             if (place.equals("극장을 선택 하세요")) {
+                 Toast.makeText(getContext(), "극장을 선택 하세요", Toast.LENGTH_SHORT).show();
+             } else if (movie.equals("영화를 선택 하세요")) {
+@@ -358,7 +366,7 @@
+     };
+ 
+     public class ImageLoadTask extends AsyncTask<HashMap<Integer, HashMap<String, String>>,
+-                ArrayList<String>, String> {
++            ArrayList<String>, String> {
+ 
+         int index = 0;
+         TextView textView;
+Index: app/src/main/res/layout/fragment_pr.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_pr.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/layout/fragment_pr.xml	(date 1620365981316)
+@@ -48,7 +48,7 @@
+                             android:id="@+id/img_mgv"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+-                            android:src="@drawable/img_mgv" />
++                            android:src="@drawable/moble_box" />
+ 
+                         <TextView
+                             android:id="@+id/tv_0"
+@@ -85,7 +85,7 @@
+                             android:layout_below="@id/tv2"
+                             android:background="#00ff0000"
+                             android:textColor="@color/white"
+-                            android:text="MGV Mission ▼" />
++                            android:text="MobleBox Mission ▼" />
+ 
+                         <View
+                             android:layout_width="match_parent"
+@@ -184,7 +184,7 @@
+                             android:layout_height="match_parent"
+                             android:id="@+id/tv_about_2"
+                             android:layout_below="@id/tv_about_1"
+-                            android:text="상영지점 MGV 3개 지점"
++                            android:text="상영지점 MobleBox 3개 지점"
+                             android:textSize="20dp"
+                             android:textColor="#FFFFFF"
+                             />
+@@ -239,7 +239,7 @@
+                             android:layout_height="match_parent"
+                             android:id="@+id/tv_brand"
+                             android:layout_below="@id/tv6"
+-                            android:text="MGV(모블지비)’는 \n\n‘모블교육센터,＇이라는 뜻의 MOBLUE와 \n‘좋은 화질＇를 뜻하는 GOODVideo 결합으로,
++                            android:text="MobleBox’는 \n\n‘모블교육센터,＇이라는 뜻의 MOBLUE와 \n‘좋은 화질＇를 뜻하는 GOODVideo 결합으로,
+ \n좋은 화질 형태로 영화관을 영상화함과 동시에 고객들에게 \n\n좋은 화질과 다양한 즐거움과 \n만족을 선사하고자 하는 의미가 담겨 있습니다\n\n"
+                             android:textColor="#FFFFFF"
+                             android:gravity="center"
+Index: app/src/main/java/com/example/moblebox/ui/ask/MyAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/ask/MyAdapter.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/ask/MyAdapter.java	(date 1620295155000)
+@@ -5,35 +5,40 @@
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.widget.ArrayAdapter;
++import android.widget.TextView;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+-import androidx.recyclerview.widget.RecyclerView;
+ 
+ import com.example.moblebox.R;
+ 
+ import java.util.ArrayList;
+-import java.util.List;
+ 
+ public class MyAdapter extends ArrayAdapter<Question> {
+-    private Context context;
+-    private List list;
+ 
+-    public MyAdapter(@NonNull Context context, ArrayList list) {
+-        super(context, 0, list);
+-        this.context = context;
+-        this.list = list;
++    private ArrayList<Question> al = new ArrayList<>();
++    private LayoutInflater inflater;
++
++    public MyAdapter(@NonNull Context context, int resource, ArrayList<Question> al) {
++        super(context, resource, al);
++        inflater = LayoutInflater.from(context);
++        this.al = al;
+     }
+ 
+     @NonNull
+     @Override
+     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+-        final RecyclerView.ViewHolder viewHolder;
++        View view = convertView;
+ 
+-        if(convertView == null){
+-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+-            convertView = layoutInflater.inflate(R.layout.listview_layout, parent, false);
++        if(view == null) {
++            view = inflater.inflate(R.layout.listview_layout, null);
+         }
+-        return convertView;
++
++        Question question = al.get(position);
++        ((TextView)view.findViewById(R.id.tv_askNum)).setText("NO." + position);
++        ((TextView)view.findViewById(R.id.tv_askID)).setText("ID : " + question.id);
++        ((TextView)view.findViewById(R.id.tv_askTitle)).setText("제목 : " + question.title);
++
++        return view;
+     }
+ }
+Index: app/src/main/java/com/example/moblebox/ui/ask/WriteQuestionFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/ask/WriteQuestionFragment.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/ask/WriteQuestionFragment.java	(date 1620295155000)
+@@ -12,6 +12,7 @@
+ 
+ import androidx.annotation.NonNull;
+ import androidx.fragment.app.Fragment;
++import androidx.navigation.Navigation;
+ 
+ import com.example.moblebox.MainActivity;
+ import com.example.moblebox.R;
+@@ -26,6 +27,9 @@
+ 
+     MainActivity activity;
+ 
++    private String loginID;
++    private Question quest;
++
+     public static WriteQuestionFragment newInstance(){
+         return new WriteQuestionFragment();
+     }
+@@ -35,10 +39,13 @@
+         view = inflater.inflate(R.layout.fragment_writequestion, container, false);
+         activity = (MainActivity)getActivity();
+ 
+-        et_title = (EditText)view.findViewById(R.id.et_QAtitle);
+-        et_contents = (EditText)view.findViewById(R.id.et_QAcontents);
++        loginID = activity.getPreference();
++
+ 
+-        btn_cancle = (Button)view.findViewById(R.id.btn_QAcancle);
++        et_title = view.findViewById(R.id.et_QAtitle);
++        et_contents = view.findViewById(R.id.et_QAcontents);
++
++        btn_cancle = view.findViewById(R.id.btn_QAcancle);
+         btn_cancle.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+@@ -47,30 +54,30 @@
+         });
+ 
+         /* 글 쓰기 버튼 클릭시 askfragment에 전달 */
+-        btn_ok = (Button)view.findViewById(R.id.btn_QAwrite);
++        btn_ok = view.findViewById(R.id.btn_QAwrite);
+         btn_ok.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-                if(et_title.length() == 0) {
+-                    et_title.requestFocus();
+-                    Toast.makeText(getContext(), "제목을 입력해 주세요", Toast.LENGTH_SHORT).show();
+-                } else if(et_contents.length() == 0) {
+-                    et_contents.requestFocus();
+-                    Toast.makeText(getContext(), "내용을 입력해 주세요", Toast.LENGTH_SHORT).show();
+-                } else {
+-                    Bundle bundle = new Bundle();
+-                    bundle.putString("title", et_title.getText().toString());
+-                    bundle.putString("contents", et_contents.getText().toString());
++                if(loginID.length() != 0) {
++                    if (et_title.length() == 0) {
++                        et_title.requestFocus();
++                        Toast.makeText(getContext(), "제목을 입력해 주세요", Toast.LENGTH_SHORT).show();
++                    } else if (et_contents.length() == 0) {
++                        et_contents.requestFocus();
++                        Toast.makeText(getContext(), "내용을 입력해 주세요", Toast.LENGTH_SHORT).show();
++                    } else {
++                        Fragment fragment = new AskFragment();
++                        Bundle bundle = new Bundle(2);
++                        bundle.putString("title", et_title.getText().toString());
++                        bundle.putString("contents", et_contents.getText().toString());
+ 
+-                    getParentFragmentManager().setFragmentResult("requestKey", bundle);
+-
+-                    activity.onBackPressed();
++                        Navigation.findNavController(view).navigate(R.id.action_nav_QA_to_nav_ask, bundle);
++                    }
++                } else {
++                    Toast.makeText(getContext(), "로그인 후 작성이 가능합니다.", Toast.LENGTH_LONG).show();
+                 }
+             }
+         });
+-
+-
+-
+ 
+         return view;
+     }
+@@ -82,9 +89,7 @@
+ 
+         goBackDialog.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+             @Override
+-            public void onClick(DialogInterface dialog, int which) {
+-                Toast.makeText(getContext(), "회원가입을 취소하였습니다.", Toast.LENGTH_SHORT).show();
+-            }
++            public void onClick(DialogInterface dialog, int which) {}
+         });
+ 
+         goBackDialog.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+@@ -98,3 +103,5 @@
+         dialog.show();
+     }
+ }
++
++
+Index: app/src/main/res/layout/dialog_join.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_join.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/layout/dialog_join.xml	(date 1620363443188)
+@@ -152,6 +152,7 @@
+                 android:layout_height="wrap_content"
+                 android:layout_alignBaseline="@id/tv_birth"
+                 android:layout_toRightOf="@id/tv_birth"
++                android:maxLength="6"
+                 android:inputType="number"
+                 android:hint="YYMMDD"/>
+ 
+Index: app/src/main/java/com/example/moblebox/ui/ask/AskFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/ask/AskFragment.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/ask/AskFragment.java	(date 1620355466708)
+@@ -7,17 +7,14 @@
+ import android.widget.AdapterView;
+ import android.widget.Button;
+ import android.widget.ListView;
+-import android.widget.ScrollView;
+ import android.widget.Toast;
+ 
+ import androidx.annotation.NonNull;
+-
+ import androidx.fragment.app.Fragment;
+-import androidx.fragment.app.FragmentResultListener;
+ import androidx.navigation.Navigation;
+ 
++import com.example.moblebox.MainActivity;
+ import com.example.moblebox.R;
+-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+ 
+ import java.util.ArrayList;
+ 
+@@ -26,14 +23,17 @@
+     private View view;
+ 
+     private Button btn_write;
+-    private int num;
+ 
+     ArrayList<Question> al = new ArrayList<>();
+     ListView listView;
+     MyAdapter myAdapter;
+ 
+-    FloatingActionButton fab;
+-    ScrollView myScrollView;
++    private String loginID;
++    private String title, contents;
++    private Question quest;
++
++    MainActivity activity;
++
+     public static AskFragment newInstance(){
+         return new AskFragment();
+     }
+@@ -42,9 +42,14 @@
+ 
+         view = inflater.inflate(R.layout.fragment_ask, container, false);
+ 
+-        listView = (ListView)view.findViewById(R.id.listView);
+-        myAdapter = new MyAdapter(getContext(), al);
++        activity = (MainActivity) getActivity();
++        loginID = activity.getPreference();
++
++        myAdapter = new MyAdapter(requireContext(), R.layout.listview_layout, al);
++
++        listView = view.findViewById(R.id.listView);
+         listView.setAdapter(myAdapter);
++
+         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+@@ -52,50 +57,23 @@
+             }
+         });
+ 
+-        btn_write = (Button)view.findViewById(R.id.btn_write);
+-        btn_write.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                if(true/* 로그인 상태 */){
+-                    Navigation.findNavController(view).navigate(R.id.action_nav_ask_to_nav_QA);
+-                } else /* 비로그인 상태 */{
+-                    Toast.makeText(getContext(), "회원들만 작성이 가능합니다.", Toast.LENGTH_SHORT).show();
+-                }
++        btn_write = view.findViewById(R.id.btn_write);
++        btn_write.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.nav_QA));
++
++
++        setArrayList();
+ 
+-            }
+-        });
++        return view;
++    }
+ 
+-        getChildFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+-            @Override
+-            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+-                String title = bundle.getString("title");
+-                String contents = bundle.getString("contents");
++    public void setArrayList(){
++        if(getArguments() != null){
++            title = getArguments().getString("title");
++            contents = getArguments().getString("contents");
+ 
+-                Question quest = new Question("userID", title, contents);
+-                al.add(quest);
+-                myAdapter.notifyDataSetChanged();
+-            }
+-        });
+-
+-
+-        fab = view.findViewById(R.id.fab_ask);
+-
+-        myScrollView = view.findViewById(R.id.scrollView_ask);
+-        fab.setOnClickListener(fab_click);
+-
+-        return view;
++            quest = new Question(loginID, title, contents);
++            al.add(quest);
++            myAdapter.notifyDataSetChanged();
++        }
+     }
+-
+-    View.OnClickListener fab_click = new View.OnClickListener() {
+-        @Override
+-        public void onClick(View v) {
+-            Thread scroll_up = new Thread("scroll thread"){
+-                @Override
+-                public void run() {
+-                    myScrollView.fullScroll(ScrollView.FOCUS_UP);
+-                }
+-            };
+-            scroll_up.start();
+-        }
+-    };
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/moblebox/ui/ask/Question.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/moblebox/ui/ask/Question.java	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/java/com/example/moblebox/ui/ask/Question.java	(date 1620286837000)
+@@ -1,23 +1,13 @@
+ package com.example.moblebox.ui.ask;
+ 
+ public class Question {
+-    private String id;
+-    private String title;
+-    private String contents;
++    String id;
++    String title;
++    String contents;
+ 
+     public Question(String id, String title, String contents){
+         this.id = id;
+         this.title = title;
+         this.contents = contents;
+     }
+-
+-    public String getId(){
+-        return id;
+-    }
+-    public String getTitle(){
+-        return title;
+-    }
+-    public String getContents(){
+-        return contents;
+-    }
+ }
+Index: app/src/main/res/layout/fragment_mydetail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_mydetail.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/layout/fragment_mydetail.xml	(date 1620192920000)
+@@ -17,74 +17,7 @@
+             android:layout_height="wrap_content">
+ 
+             <RelativeLayout
+-                android:id="@+id/layout_pwChange"
+-                android:layout_width="match_parent"
+-                android:layout_height="wrap_content"
+-                android:padding="30sp">
+-
+-                <TextView
+-                    android:id="@+id/tv_pasword"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:text="비밀번호 변경"
+-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+-
+-                <TextView
+-                    android:id="@+id/tv_newPw"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:layout_below="@id/tv_pasword"
+-                    android:layout_marginTop="30sp"
+-                    android:text="새 비밀번호 " />
+-
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
+-                    android:layout_alignBaseline="@id/tv_newPw"
+-                    android:layout_alignLeft="@id/PWCheck"
+-                    android:layout_toRightOf="@id/tv_newPw" />
+-
+-                <TextView
+-                    android:id="@+id/tv_newPwCheck"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:layout_below="@id/tv_newPw"
+-                    android:layout_marginTop="20sp"
+-                    android:gravity="center"
+-                    android:text="새 비밀번호\n확인" />
+-
+-                <EditText
+-                    android:id="@+id/PWCheck"
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
+-                    android:layout_alignBottom="@id/tv_newPwCheck"
+-                    android:layout_toRightOf="@id/tv_newPwCheck" />
+-
+-                <TextView
+-                    android:id="@+id/tv_PWcheck"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:layout_below="@id/PWCheck"
+-                    android:layout_alignLeft="@id/PWCheck" />
+-
+-                <Button
+-                    android:id="@+id/btn_changePw"
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:layout_below="@id/tv_PWcheck"
+-                    android:layout_alignRight="@id/PWCheck"
+-                    android:text="비밀번호 변경" />
+-            </RelativeLayout>
+-
+-
+-            <View
+-                android:layout_width="match_parent"
+-                android:layout_height="2dp"
+-                android:background="#595656"
+-                android:layout_below="@id/layout_pwChange"/>
+-
+-            <RelativeLayout
+-                android:layout_below="@id/layout_pwChange"
++                android:id="@+id/layout_mydetail"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:padding="30sp">
+@@ -105,6 +38,7 @@
+                     android:text="이름" />
+ 
+                 <EditText
++                    android:id="@+id/et_name"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_alignBaseline="@id/tv_name"
+@@ -122,13 +56,14 @@
+ 
+ 
+                 <TextView
++                    android:id="@+id/gender"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@id/tv_name"
+                     android:layout_alignBaseline="@id/tv_gender"
+                     android:layout_alignLeft="@id/et_birth"
+                     android:layout_marginTop="20sp"
+-                    android:layout_toRightOf="@id/tv_gender"/>
++                    android:layout_toRightOf="@id/tv_gender" />
+ 
+                 <TextView
+                     android:id="@+id/tv_phoneNum"
+@@ -139,8 +74,10 @@
+                     android:text="연락처" />
+ 
+                 <EditText
++                    android:id="@+id/et_phoneNum"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
++                    android:maxLength="11"
+                     android:layout_alignBaseline="@id/tv_phoneNum"
+                     android:layout_alignLeft="@id/et_birth"
+                     android:layout_toRightOf="@id/tv_phoneNum"
+@@ -158,6 +95,7 @@
+                     android:id="@+id/et_birth"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
++                    android:maxLength="6"
+                     android:layout_alignBaseline="@id/tv_birth"
+                     android:layout_toRightOf="@id/tv_birth"
+                     android:inputType="number" />
+@@ -178,25 +116,96 @@
+                     android:layout_alignLeft="@id/et_birth"
+                     android:layout_toRightOf="@id/tv_address" />
+ 
++
++
++                <Button
++                    android:id="@+id/btn_change"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_below="@id/et_address"
++                    android:layout_alignRight="@id/et_address"
++                    android:layout_marginTop="20sp"
++                    android:text="변경하기" />
++
++            </RelativeLayout>
++
++            <View
++                android:layout_width="match_parent"
++                android:layout_height="2dp"
++                android:background="#595656"
++                android:layout_below="@id/layout_mydetail"/>
++
++            <RelativeLayout
++                android:id="@+id/layout_pwChange"
++                android:layout_below="@id/layout_mydetail"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:padding="30sp">
++
++                <TextView
++                    android:id="@+id/tv_pasword"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="비밀번호 변경"
++                    android:textAppearance="?android:attr/textAppearanceLarge" />
++
++                <TextView
++                    android:id="@+id/tv_newPw"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_below="@id/tv_pasword"
++                    android:layout_marginTop="30sp"
++                    android:text="새 비밀번호 " />
++
++                <EditText
++                    android:id="@+id/et_newPw"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:layout_alignBaseline="@id/tv_newPw"
++                    android:layout_alignLeft="@id/et_newPwCheck"
++                    android:layout_toRightOf="@id/tv_newPw" />
++
++                <TextView
++                    android:id="@+id/tv_newPwCheck"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_below="@id/tv_newPw"
++                    android:layout_marginTop="20sp"
++                    android:gravity="center"
++                    android:text="새 비밀번호\n확인" />
++
++                <EditText
++                    android:id="@+id/et_newPwCheck"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:layout_alignBottom="@id/tv_newPwCheck"
++                    android:layout_toRightOf="@id/tv_newPwCheck" />
++
++                <TextView
++                    android:id="@+id/tv_PWcheck"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_below="@id/et_newPwCheck"
++                    android:textColor="#ff1111"
++                    android:layout_alignLeft="@id/et_newPwCheck" />
++
+                 <Button
+                     android:id="@+id/btn_ok"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+-                    android:layout_below="@id/et_address"
+                     android:layout_marginTop="20sp"
+                     android:layout_marginRight="10sp"
+-                    android:layout_toLeftOf="@id/btn_change"
++                    android:layout_toLeftOf="@id/btn_changePw"
++                    android:layout_alignBaseline="@id/btn_changePw"
+                     android:text="확인" />
+ 
+                 <Button
+-                    android:id="@+id/btn_change"
++                    android:id="@+id/btn_changePw"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+-                    android:layout_below="@id/et_address"
+-                    android:layout_alignRight="@id/et_address"
+-                    android:layout_marginTop="20sp"
+-                    android:text="변경하기" />
+-
++                    android:layout_below="@id/tv_PWcheck"
++                    android:layout_alignRight="@id/et_newPwCheck"
++                    android:text="비밀번호 변경" />
+             </RelativeLayout>
+         </RelativeLayout>
+     </ScrollView>
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_home.xml	(revision 9a4bcde421267c7ae545f86dfa8c758bf35e87e2)
++++ app/src/main/res/layout/fragment_home.xml	(date 1620358259729)
+@@ -64,11 +64,11 @@
+                         android:id="@+id/tv_textMovie"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+-                        android:layout_marginTop="60sp"
+-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                         android:layout_below="@id/btn_layoutevent"
+-                        android:text="이달의 영화 TOP4"
+-                        android:gravity="center"/>
++                        android:layout_marginTop="60sp"
++                        android:gravity="center"
++                        android:text="추천영화 BEST3"
++                        android:textAppearance="?android:attr/textAppearanceLarge" />
+ 
+                     <LinearLayout
+                         android:layout_width="match_parent"
+@@ -87,7 +87,7 @@
+                             <androidx.viewpager.widget.ViewPager
+                                 android:id="@+id/pager_movie"
+                                 android:layout_width="match_parent"
+-                                android:layout_height="200sp" />
++                                android:layout_height="300sp" />
+ 
+                             <me.relex.circleindicator.CircleIndicator
+                                 android:id="@+id/indicator_movie"
